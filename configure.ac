@@ -100,11 +100,11 @@ if test "$CYGWIN" = yes ; then
 	AC_ARG_WITH(wpdpack,
 	[  --with-wpdpack=DIR      use WinPcap developer's pack in DIR],
 	[ AC_MSG_RESULT($withval)
-	  if test -f $withval/include/Packet32.h -a -f $withval/lib/Packet.lib; then
+	  if test -f $withval/Include/Packet32.h -a -f $withval/Lib/Packet.lib; then
 	     owd=`pwd`
 	     if cd $withval; then withval=`pwd`; cd $owd; fi
 	     CFLAGS="$CFLAGS -I$withval/include"
-	     LIBS="$LIBS -L$withval/lib -lpacket -lwpcap"
+	     LIBS="$LIBS -L$withval/lib -lPacket -lwpcap"
 	  else
 	     AC_MSG_ERROR(packet32.h or packet.lib not found in $withval)
 	  fi ],

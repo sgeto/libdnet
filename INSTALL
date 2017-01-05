@@ -1,3 +1,6 @@
+I may eventually add top level scripts for for easier building from Github.
+For now, here's the drill:
+
 
 *BSD, MacOS X, Linux
 --------------------
@@ -21,15 +24,13 @@ Unixware, AIX
 These ports are incomplete. If anyone can set me up with legitimate
 root access to these platforms, it would be most appreciated. :-)
 
-Windows 2000/XP
+Windows
 ---------------
 
-For raw Ethernet sending, install the WinPcap driver and DLLs, and
-extract their developer pack to a build directory:
+For raw Ethernet sending, install the WinPcap driver and DLLs from http://www.winpcap.org/install/default.htm. 
 
-	http://winpcap.polito.it/install/default.htm
+It is assumed that the WinPcap Developer's package aka WpdPack (available at http://www.winpcap.org/devel.htm) and libdnet have the same path. Please adjust accordingly if not. During configure, the --with-wpdpack=DIR option is mandatory and needs to point to the extracted WpdPack folder, although libraries and header files are (for some reason) also required to be present in your compilers /lib and /include directories.
 
-# XXX - unsupported for now
 # For tunnel interface support, install the OpenVPN "TAP-Win32 Virtual
 # Ethernet Adapter" component (their Windows installer will let you
 # install it alone):
@@ -40,13 +41,25 @@ For firewall support, install HSC's PktFilter service:
 
 	http://www.hsc.fr/ressources/outils/pktfilter/index.html.en
 
-Most Windows developers should just use the libdnet developer's pack
-(with MinGW and MSVC++ libraries) instead of building it themselves.
-But for those who really want to know...
+MinGW:
 
-To build a MinGW native library (under Cygwin+MinGW):
+When building from Github make sure to run ./autogen.sh to generate the configure shell script.
 
-	./configure && make
+Cross compiling using WSL:
+
+32bit:
+./configure --host=i686-w64-mingw32 --with-wpdpack=../WpdPack
+64bit:
+./configure --host=x86_64-w64-mingw32 --with-wpdpack=../WpdPack
+
+
+Compiling natively (under MSYS2):
+
+Build steps should be the same as when cross compiling, except that the --host= option can be omitted.
+
+Compiling natively library (under MSVC):
+
+No idea. Coming soon. Try these old instructions for now:
 
 To build a Microsoft Visual C++ native library and Python module
 (again, under Cygwin+MinGW):
@@ -54,6 +67,3 @@ To build a Microsoft Visual C++ native library and Python module
 	./configure
 	cd python && C:/Python23/python.exe setup.py build
 	cd ../src && lib /out:dnet.lib *.obj
-
-
-# $Id: INSTALL 590 2005-02-15 07:38:19Z dugsong $
