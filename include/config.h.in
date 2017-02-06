@@ -45,6 +45,9 @@
 /* Define to 1 if you have the `nsl' library (-lnsl). */
 #undef HAVE_LIBNSL
 
+/* Define to 1 if you have the `packet' library (-lpacket). */
+#undef HAVE_LIBPACKET
+
 /* Define to 1 if you have the `resolv' library (-lresolv). */
 #undef HAVE_LIBRESOLV
 
@@ -53,6 +56,9 @@
 
 /* Define to 1 if you have the `str' library (-lstr). */
 #undef HAVE_LIBSTR
+
+/* Define to 1 if you have the `wpcap' library (-lwpcap). */
+#undef HAVE_LIBWPCAP
 
 /* Define to 1 if you have the `ws2_32' library (-lws2_32). */
 #undef HAVE_LIBWS2_32

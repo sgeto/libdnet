@@ -26,6 +26,6 @@ autom4te*
 libtool
 dnet-config
 include/stamp*
-
+build-aux
 test/dnet/dnet
 python/setup.py

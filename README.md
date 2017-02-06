@@ -4,7 +4,7 @@
 
 Libdnet provides a simplified, portable interface to several low-level networking routines, including network address manipulation, kernel arp(4) cache and route(4) table lookup and manipulation, network firewalling, network interface lookup and manipulation, IP tunneling, and raw IP packet and Ethernet frame transmission.
 
-This is a more or less personal fork I'm committed to maintain and keep up-to-date for educational proposes although any kind of help is appreciated. The list of changes and "planned adjustments" pretty much matches that of upstream.
+This is a more or less personal fork I'm committed to maintain and keep up-to-date for educational proposes but any kind of help is greatly appreciated. The list of changes and "planned adjustments" pretty much matches that of upstream.
 
 original: https://github.com/dugsong/libdnet
 upstream: https://github.com/boundary/libdnet
@@ -16,7 +16,7 @@ nmap fork of libdnet: https://github.com/nmap/nmap/tree/master/libdnet-stripped
 
 ## Build
 
-For now, please see INSTALL for various build instructions.
+For now, see INSTALL for various build instructions.
 
 ## Downloads
 

@@ -2,14 +2,17 @@ dnl
 dnl configure.in
 dnl
 dnl Copyright (c) 2000 Dug Song <dugsong@monkey.org>
+dnl Modified by Ali Abdulkadir <autostart.ini@gmail.com>
 dnl
-dnl $Id: configure.in 638 2007-01-20 11:39:21Z dugsong $
+dnl Process this file with autoconf to produce a configure script.
 
-AC_INIT([libdnet], [1.12])
+AC_INIT([libdnet],[1.12],[autostart.ini@gmail.com],[libdnet],[https://github.com/sgeto/libdnet])
 AC_CONFIG_SRCDIR([include/dnet.h])
-AC_CONFIG_AUX_DIR(config)
+AC_CONFIG_AUX_DIR([build-aux])
 AC_SUBST(ac_aux_dir)
-
+AC_PREREQ([2.69])
+LT_PREREQ([2.4.2])
+AC_MSG_RESULT(Beginning autoconfiguration process for libdnet-${PACKAGE_VERSION} ...)
 AC_CONFIG_HEADERS([include/config.h])
 AM_INIT_AUTOMAKE
 
@@ -19,27 +22,41 @@ AC_CONFIG_MACRO_DIR([m4])
 dnl XXX - stop the insanity!@#$
 AM_MAINTAINER_MODE
 
+dnl the default compiler flags are "-O2 -g" if the user does not set anything.
+dnl IMO O2 optimizations are fine, but debugging should be completely up to the
+dnl user. The following test does just that. (Do not move these lines
+dnl below "AC_PROG_CC"!!)
+if test -z $CFLAGS; then
+    CFLAGS="-O2"
+fi
+
 dnl Check for system type.
 dnl XXX - we do this to qualify our later feature checks, since some
 dnl systems claim to support multiple features, but are quite b0rked.
 AC_CANONICAL_HOST
-dnl XXX - spoof AC_CYGWIN
+
 case "$host_os" in
   *cygwin*) CYGWIN=yes;MINGW=no;;
   *mingw*) CYGWIN=yes;MINGW=yes;;
          *) CYGWIN=no;MINGW=no;;
 esac
 
-dnl Initialize prefix.
-if test "$prefix" = "NONE"; then
-   prefix="/usr/local"
+dnl Initialize and Handle the --prefix=... option
+
+if test "${prefix}" = "NONE"; then
+    prefix=/usr/local
 fi
+if test "${exec_prefix}" = "NONE"; then
+    exec_prefix=$prefix
+fi
+dnl libdir must be a fully qualified path (not ${exec_prefix}/lib)
+eval libdir="$libdir"
 
 dnl Checks for programs.
 AC_PROG_CC
 AC_PROG_INSTALL
-AC_LIBTOOL_DLOPEN
-AM_PROG_LIBTOOL
+LT_INIT([dlopen win32-dll])
+LT_LANG([Windows Resource])
 
 dnl Checks for Python.
 dnl XXX - use AM_PATH_PYTHON after automake upgrade
@@ -65,7 +82,7 @@ AC_ARG_WITH(python,
 	fi
      done
      if test "x$PYTHON" = "x"; then
-        AC_ERROR(python not found in $withval)
+        AC_MSG_ERROR(python not found in $withval)
      fi
      ;;
   esac 
@@ -82,6 +99,11 @@ if test -r /usr/include/sgidefs.h ; then
 fi
 dnl XXX - we need MingW32 under Cygwin for win32
 if test "$CYGWIN" = yes ; then
+		WIN32="yes"
+		AC_SUBST(WIN32)
+		AM_CONDITIONAL([WIN32], [test "${WIN32}" = "yes"])
+		AC_CHECK_TOOL([WINDRES], [windres], AC_MSG_ERROR([windres not found]))
+		AC_SUBST(WINDRES)
 	if test -d /usr/include/mingw || test -d /usr/i686-w64-mingw32; then
 		if test "$MINGW" = no ; then
 			CPPFLAGS="$CPPFLAGS -mno-cygwin"
@@ -91,35 +113,72 @@ if test "$CYGWIN" = yes ; then
 		    [Define for faster code generation.])
 		AC_CHECK_LIB(ws2_32, main)
 		AC_CHECK_LIB(iphlpapi, main)
+		AC_CHECK_LIB(packet, PacketSetMode, ,AC_MSG_ERROR(libpacket.a not found.))
+		AC_CHECK_LIB(wpcap, pcap_setmode, ,AC_MSG_ERROR(libwpcap.a not found.))
 		AC_DEFINE(snprintf, _snprintf, 
 		    [Use MingW32's internal snprintf])
+elif test "$MINGW" = yes ; then
+    WIN32="yes"
+    AC_SUBST(WIN32)
+    AM_CONDITIONAL([WIN32], [test "${WIN32}" = "yes"])
+    AC_CHECK_TOOL([WINDRES], [windres], AC_MSG_ERROR([windres not found]))
+    AC_SUBST(WINDRES)
+    AC_DEFINE(WIN32_LEAN_AND_MEAN, 1, 
+        [Define for faster code generation.])
+    if test "${cross_compiling}" = "yes" ; then
+       if test "$host" = "i686-w64-mingw32" ; then
+    AC_CHECK_LIB(packet, PacketSetMode, ,AC_MSG_ERROR(libpacket.a not found.))
+    AC_CHECK_LIB(wpcap, pcap_setmode, ,AC_MSG_ERROR(libwpcap.a not found.))
+    LIBS="$LIBS -lws2_32 -liphlpapi"
+    CFLAGS="$CFLAGS -static-libgcc -march=i686 -mwin32"
+       else
+    AC_CHECK_LIB(packet, PacketSetMode, ,AC_MSG_ERROR(libpacket.a not found.))
+    AC_CHECK_LIB(wpcap, pcap_setmode, ,AC_MSG_ERROR(libwpcap.a not found.))
+    LIBS="$LIBS -lws2_32 -liphlpapi"
+    CFLAGS="$CFLAGS -static-libgcc -mwin32"
+    LDFLAGS="$LDFLAGS -Wl,--high-entropy-va"
+       fi
+    else
+       if test "$host" = "i686-w64-mingw32" ; then
+    AC_CHECK_LIB(packet, PacketSetMode, ,AC_MSG_ERROR(libpacket.a not found.))
+    AC_CHECK_LIB(wpcap, pcap_setmode, ,AC_MSG_ERROR(libwpcap.a not found.))
+    LIBS="$LIBS -lws2_32 -liphlpapi"
+    CFLAGS="$CFLAGS -march=i686 -mwin32"
+       else
+    AC_CHECK_LIB(packet, PacketSetMode, ,AC_MSG_ERROR(libpacket.a not found.))
+    AC_CHECK_LIB(wpcap, pcap_setmode, ,AC_MSG_ERROR(libwpcap.a not found.))
+    LIBS="$LIBS -lws2_32 -liphlpapi"
+    CFLAGS="$CFLAGS -mwin32"
+    LDFLAGS="$LDFLAGS -Wl,--high-entropy-va"
+       fi
+    fi
 	else
 		AC_MSG_ERROR([need MingW32 package to build under Cygwin])
 	fi
-	AC_MSG_CHECKING(for WinPcap developer's pack)
-	AC_ARG_WITH(wpdpack,
-	[  --with-wpdpack=DIR      use WinPcap developer's pack in DIR],
-	[ AC_MSG_RESULT($withval)
-	  if test -f $withval/Include/Packet32.h -a -f $withval/Lib/Packet.lib; then
-	     owd=`pwd`
-	     if cd $withval; then withval=`pwd`; cd $owd; fi
-	     CFLAGS="$CFLAGS -I$withval/include"
-	     LIBS="$LIBS -L$withval/lib -lPacket -lwpcap"
-	  else
-	     AC_MSG_ERROR(packet32.h or packet.lib not found in $withval)
-	  fi ],
-	[ for dir in ${prefix} ${HOME}/WPdpack ; do
-	     if test -f ${dir}/include/packet32.h -a -f ${dir}/lib/packet.lib; then
-	        CFLAGS="$CFLAGS -I${dir}/include"
-		LIBS="$LIBS -L${dir}/lib -lpacket -lpcap"
-		have_pcap=yes
-		break;
-	     fi
-	  done
-	  if test "$have_pcap" != yes; then
-	     AC_MSG_ERROR(WinPcap developer's pack not found)
-	  fi
-	  AC_MSG_RESULT(yes) ])
+	# AC_MSG_CHECKING(for WinPcap developer's pack)
+	# AC_ARG_WITH(wpdpack,
+	# [  --with-wpdpack=DIR      use WinPcap developer's pack in DIR],
+	# [ AC_MSG_RESULT($withval)
+	  # if test -f $withval/Include/Packet32.h -a -f $withval/Lib/Packet.lib; then
+	     # owd=`pwd`
+	     # if cd $withval; then withval=`pwd`; cd $owd; fi
+	     # CFLAGS="$CFLAGS -I$withval/include"
+	     # LIBS="$LIBS -L$withval/lib -lPacket -lwpcap"
+	  # else
+	     # AC_MSG_ERROR(packet32.h or packet.lib not found in $withval)
+	  # fi ],
+	# [ for dir in ${prefix} ${HOME}/WPdpack ; do
+	     # if test -f ${dir}/include/packet32.h -a -f ${dir}/lib/packet.lib; then
+	        # CFLAGS="$CFLAGS -I${dir}/include"
+		# LIBS="$LIBS -L${dir}/lib -lpacket -lpcap"
+		# have_pcap=yes
+		# break;
+	     # fi
+	  # done
+	  # if test "$have_pcap" != yes; then
+	     # AC_MSG_ERROR(WinPcap developer's pack not found)
+	  # fi
+	  # AC_MSG_RESULT(yes) ]
 fi
 
 dnl Checks for libraries.
@@ -149,7 +208,7 @@ AC_ARG_WITH(check,
         CHECKINC="-I$withval/src"
         CHECKLIB="-L$withval/src -lcheck"
      else
-        AC_ERROR(check.h or libcheck.a not found in $withval)
+        AC_MSG_ERROR(check.h or libcheck.a not found in $withval)
      fi
      ;;
   esac ],
@@ -325,7 +384,8 @@ else
 	AC_LIBOBJ([tun-none])
 fi
 
-AC_OUTPUT([Makefile dnet-config include/Makefile include/dnet/Makefile
+AC_CONFIG_FILES([Makefile dnet-config include/Makefile include/dnet/Makefile
 	man/Makefile src/Makefile python/Makefile python/setup.py
-	test/Makefile test/check/Makefile test/dnet/Makefile],
-	[chmod 755 dnet-config])
+	test/Makefile test/check/Makefile test/dnet/Makefile])
+AC_CONFIG_COMMANDS([default],[chmod 755 dnet-config],[])
+AC_OUTPUT
