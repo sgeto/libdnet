@@ -101,7 +101,6 @@ dnl XXX - we need MingW32 under Cygwin for win32
 if test "$CYGWIN" = yes ; then
 		WIN32="yes"
 		AC_SUBST(WIN32)
-		AM_CONDITIONAL([WIN32], [test "${WIN32}" = "yes"])
 		AC_CHECK_TOOL([WINDRES], [windres], AC_MSG_ERROR([windres not found]))
 		AC_SUBST(WINDRES)
 	if test -d /usr/include/mingw || test -d /usr/i686-w64-mingw32; then
@@ -120,7 +119,6 @@ if test "$CYGWIN" = yes ; then
 elif test "$MINGW" = yes ; then
     WIN32="yes"
     AC_SUBST(WIN32)
-    AM_CONDITIONAL([WIN32], [test "${WIN32}" = "yes"])
     AC_CHECK_TOOL([WINDRES], [windres], AC_MSG_ERROR([windres not found]))
     AC_SUBST(WINDRES)
     AC_DEFINE(WIN32_LEAN_AND_MEAN, 1, 
@@ -180,6 +178,9 @@ elif test "$MINGW" = yes ; then
 	  # fi
 	  # AC_MSG_RESULT(yes) ]
 fi
+
+dnl this should only matter if we are building for Windows...
+AM_CONDITIONAL([WIN32], [test "${WIN32}" = "yes"])
 
 dnl Checks for libraries.
 if test "$CYGWIN" != yes ; then
