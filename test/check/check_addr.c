@@ -2,10 +2,12 @@
 #include "config.h"
 
 #include <sys/types.h>
+#ifdef HAVE_NET_IF_H
 #include <sys/socket.h>
-
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#endif
+
 
 #include <dnet.h>
 

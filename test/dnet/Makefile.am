@@ -1,7 +1,5 @@
 ## $Id: Makefile.am 427 2003-03-28 06:02:44Z dugsong $
 
-include $(top_srcdir)/Makefile.am.common
-
 sbin_PROGRAMS = dnet
 
 dnet_SOURCES = addr.c arp.c aton.c aton.h dnet.c eth.c fw.c hex.c \
