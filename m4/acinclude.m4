@@ -1,21 +1,21 @@
 dnl
 dnl Check for 4.4 BSD sa_len member in sockaddr struct
 dnl
-dnl usage:	AC_DNET_SOCKADDR_SA_LEN
-dnl results:	HAVE_SOCKADDR_SA_LEN (defined)
+dnl usage:  AC_DNET_SOCKADDR_SA_LEN
+dnl results:    HAVE_SOCKADDR_SA_LEN (defined)
 dnl
 AC_DEFUN([AC_DNET_SOCKADDR_SA_LEN],
     [AC_MSG_CHECKING(for sa_len in sockaddr struct)
     AC_CACHE_VAL(ac_cv_dnet_sockaddr_has_sa_len,
-        AC_TRY_COMPILE([
+        AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
 # ifndef _SOCKADDR_LEN
-#	define _SOCKADDR_LEN 1 
+#   define _SOCKADDR_LEN 1 
 # endif
 #       include <sys/types.h>
-#       include <sys/socket.h>],
-        [u_int i = sizeof(((struct sockaddr *)0)->sa_len)],
-        ac_cv_dnet_sockaddr_has_sa_len=yes,
-        ac_cv_dnet_sockaddr_has_sa_len=no))
+#       include <sys/socket.h>
+        ]], [[ u_int i = sizeof(((struct sockaddr *)0)->sa_len) ]])], 
+        [ac_cv_dnet_sockaddr_has_sa_len=yes], 
+        [ac_cv_dnet_sockaddr_has_sa_len=no]))
     AC_MSG_RESULT($ac_cv_dnet_sockaddr_has_sa_len)
     if test $ac_cv_dnet_sockaddr_has_sa_len = yes ; then
             AC_DEFINE(HAVE_SOCKADDR_SA_LEN, 1,
@@ -25,23 +25,23 @@ AC_DEFUN([AC_DNET_SOCKADDR_SA_LEN],
 dnl
 dnl Check for sockaddr_in6 struct in <netinet/in.h>
 dnl
-dnl usage:	AC_DNET_SOCKADDR_IN6
-dnl results:	HAVE_SOCKADDR_IN6
+dnl usage:  AC_DNET_SOCKADDR_IN6
+dnl results:    HAVE_SOCKADDR_IN6
 dnl
 AC_DEFUN([AC_DNET_SOCKADDR_IN6],
     [AC_MSG_CHECKING(for sockaddr_in6 struct in <netinet/in.h>)
     AC_CACHE_VAL(ac_cv_dnet_netinet_in_h_has_sockaddr_in6,
-        AC_TRY_COMPILE([
-#       include <sys/types.h>
-#	include <sys/socket.h>
-#       include <netinet/in.h>],
-        [struct sockaddr_in6 sin6; sin6.sin6_family = AF_INET6;],
-	ac_cv_dnet_netinet_in_h_has_sockaddr_in6=yes,
-	ac_cv_dnet_netinet_in_h_has_sockaddr_in6=no))
+        AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+# include <sys/types.h>
+# include <sys/socket.h>
+# include <netinet/in.h>
+        ]], [[ struct sockaddr_in6 sin6; sin6.sin6_family = AF_INET6; ]])], 
+        [ac_cv_dnet_netinet_in_h_has_sockaddr_in6=yes], 
+        [ac_cv_dnet_netinet_in_h_has_sockaddr_in6=no]))
     AC_MSG_RESULT($ac_cv_dnet_netinet_in_h_has_sockaddr_in6)
     if test $ac_cv_dnet_netinet_in_h_has_sockaddr_in6 = yes ; then
         AC_DEFINE(HAVE_SOCKADDR_IN6, 1,
-	          [Define if <netinet/in.h> has sockaddr_in6 struct.])
+            [Define if <netinet/in.h> has sockaddr_in6 struct.])
     fi])
 
 dnl
@@ -53,17 +53,17 @@ dnl
 AC_DEFUN([AC_DNET_ARPREQ_ARP_DEV],
     [AC_MSG_CHECKING(for arp_dev in arpreq struct)
     AC_CACHE_VAL(ac_cv_dnet_arpreq_has_arp_dev,
-	AC_TRY_COMPILE([
-#       include <sys/types.h>
-#	include <sys/socket.h>
-#	include <net/if_arp.h>],
-	[void *p = ((struct arpreq *)0)->arp_dev],
-	ac_cv_dnet_arpreq_has_arp_dev=yes,
-	ac_cv_dnet_arpreq_has_arp_dev=no))
+        AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+# include <sys/types.h>
+# include <sys/socket.h>
+# include <net/if_arp.h>
+        ]], [[ void *p = ((struct arpreq *)0)->arp_dev ]])], 
+        [ac_cv_dnet_arpreq_has_arp_dev=yes], 
+        [ac_cv_dnet_arpreq_has_arp_dev=no]))
     AC_MSG_RESULT($ac_cv_dnet_arpreq_has_arp_dev)
     if test $ac_cv_dnet_arpreq_has_arp_dev = yes ; then
-	AC_DEFINE(HAVE_ARPREQ_ARP_DEV, 1,
-		[Define if arpreq struct has arp_dev.])
+    AC_DEFINE(HAVE_ARPREQ_ARP_DEV, 1,
+        [Define if arpreq struct has arp_dev.])
     fi])
 
 dnl
@@ -75,18 +75,18 @@ dnl
 AC_DEFUN([AC_DNET_ROUTE_RT_MSGHDR],
     [AC_MSG_CHECKING(for rt_msghdr struct in <net/route.h>)
     AC_CACHE_VAL(ac_cv_dnet_route_h_has_rt_msghdr,
-        AC_TRY_COMPILE([
-#       include <sys/types.h>
-#       include <sys/socket.h>
-#       include <net/if.h>
-#       include <net/route.h>],
-        [struct rt_msghdr rtm; rtm.rtm_msglen = 0;],
-	ac_cv_dnet_route_h_has_rt_msghdr=yes,
-	ac_cv_dnet_route_h_has_rt_msghdr=no))
+        AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+# include <sys/types.h>
+# include <sys/socket.h>
+# include <net/if.h>
+# include <net/route.h>
+        ]], [[ struct rt_msghdr rtm; rtm.rtm_msglen = 0; ]])], 
+        [ac_cv_dnet_route_h_has_rt_msghdr=yes], 
+        [ac_cv_dnet_route_h_has_rt_msghdr=no]))
     AC_MSG_RESULT($ac_cv_dnet_route_h_has_rt_msghdr)
     if test $ac_cv_dnet_route_h_has_rt_msghdr = yes ; then
         AC_DEFINE(HAVE_ROUTE_RT_MSGHDR, 1,
-	          [Define if <net/route.h> has rt_msghdr struct.])
+            [Define if <net/route.h> has rt_msghdr struct.])
     fi])
 
 dnl
