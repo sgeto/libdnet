@@ -14,7 +14,7 @@ AC_DEFUN([AC_DNET_SOCKADDR_SA_LEN],
 #       include <sys/types.h>
 #       include <sys/socket.h>
         ]], [[ u_int i = sizeof(((struct sockaddr *)0)->sa_len) ]])], 
-        [ac_cv_dnet_sockaddr_has_sa_len=yes], 
+        [ac_cv_dnet_sockaddr_has_sa_len=yes],
         [ac_cv_dnet_sockaddr_has_sa_len=no]))
     AC_MSG_RESULT($ac_cv_dnet_sockaddr_has_sa_len)
     if test $ac_cv_dnet_sockaddr_has_sa_len = yes ; then
@@ -36,7 +36,7 @@ AC_DEFUN([AC_DNET_SOCKADDR_IN6],
 # include <sys/socket.h>
 # include <netinet/in.h>
         ]], [[ struct sockaddr_in6 sin6; sin6.sin6_family = AF_INET6; ]])], 
-        [ac_cv_dnet_netinet_in_h_has_sockaddr_in6=yes], 
+        [ac_cv_dnet_netinet_in_h_has_sockaddr_in6=yes],
         [ac_cv_dnet_netinet_in_h_has_sockaddr_in6=no]))
     AC_MSG_RESULT($ac_cv_dnet_netinet_in_h_has_sockaddr_in6)
     if test $ac_cv_dnet_netinet_in_h_has_sockaddr_in6 = yes ; then
@@ -58,7 +58,7 @@ AC_DEFUN([AC_DNET_ARPREQ_ARP_DEV],
 # include <sys/socket.h>
 # include <net/if_arp.h>
         ]], [[ void *p = ((struct arpreq *)0)->arp_dev ]])], 
-        [ac_cv_dnet_arpreq_has_arp_dev=yes], 
+        [ac_cv_dnet_arpreq_has_arp_dev=yes],
         [ac_cv_dnet_arpreq_has_arp_dev=no]))
     AC_MSG_RESULT($ac_cv_dnet_arpreq_has_arp_dev)
     if test $ac_cv_dnet_arpreq_has_arp_dev = yes ; then
@@ -81,7 +81,7 @@ AC_DEFUN([AC_DNET_ROUTE_RT_MSGHDR],
 # include <net/if.h>
 # include <net/route.h>
         ]], [[ struct rt_msghdr rtm; rtm.rtm_msglen = 0; ]])], 
-        [ac_cv_dnet_route_h_has_rt_msghdr=yes], 
+        [ac_cv_dnet_route_h_has_rt_msghdr=yes],
         [ac_cv_dnet_route_h_has_rt_msghdr=no]))
     AC_MSG_RESULT($ac_cv_dnet_route_h_has_rt_msghdr)
     if test $ac_cv_dnet_route_h_has_rt_msghdr = yes ; then
