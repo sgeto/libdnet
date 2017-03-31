@@ -2,7 +2,7 @@
 *.o
 
 # Libraries
-*.lib*
+
 *.a
 
 # Shared objects (inc. Windows DLLs)
@@ -14,18 +14,53 @@
 *.lo
 
 # Executables
+dnet-config
 *.exe
 *.out
 *.app
 
-*m4
-config*
+test/check/check_addr
+test/check/check_arp
+test/check/check_blob
+test/check/check_eth
+test/check/check_fw
+test/check/check_ip
+test/check/check_intf
+test/check/check_rand
+test/check/check_route
+
+
+# Autotools
 Makefile
 Makefile.in
-autom4te*
+
+aclocal.m4
+configure
+config.log
+config.status
 libtool
-dnet-config
-include/stamp*
+
+autom4te.cache
 build-aux
-test/dnet/dnet
+.libs
+
+python/build
+python/python-build
+python/dnet.c
 python/setup.py
+
+m4/libtool.m4
+m4/lt~obsolete.m4
+m4/ltoptions.m4
+m4/ltsugar.m4
+m4/ltversion.m4
+
+include/config.h
+include/config.h.in
+include/config.h.in~
+include/stamp-h1
+
+test/dnet/dnet
+
+# Random stuff
+.prebuild*
