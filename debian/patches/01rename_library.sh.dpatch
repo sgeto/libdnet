@@ -1,0 +1,79 @@
+#!/bin/bash
+## 01rename_library.sh.dpatch by  <hesso@pool.math.tu-berlin.de>
+##
+## DP: Script patch to accomplish the Debian-specific library
+## DP: name change (and the corresponding reverse action).
+set -e
+
+# Make all necessary modifications to magically change upstream's
+# conflicting "libdnet" to "libdumbnet" as chosen for Debian.
+
+declare -a OLD_RENAME_FILES NEW_RENAME_FILES
+
+MANPAGENOTE='.Sh COMPATIBILITY\
+The library was originally named\
+.Xr dnet\
+but was renamed to\
+.Xr dumbnet\
+due to a conflict with the DECnet library. This decision affects not only the\
+filename of the shared library, but also the header file names and the library'\''s\
+SONAME tag, which means that software built on a non-Debian-derived distribution\
+will not run with this library and recompiling the software will only work if\
+some adjustments to header include directives and compiler/linker flags are made.'
+
+OLD_RENAME_FILES=( dnet-config.in include/dnet include/dnet.h test/dnet/dnet.8 test/dnet/dnet.c test/dnet man/dnet.3 python/dnet.pyx )
+NEW_RENAME_FILES=( dumbnet-config.in include/dumbnet include/dumbnet.h test/dnet/dumbnet.8 test/dnet/dumbnet.c test/dumbnet man/dumbnet.3 python/dumbnet.pyx )
+
+if [ "$1" = "-patch" ]; then
+  OLD_NAME="dnet"
+  NEW_NAME="dumbnet"
+  DIR=1
+elif [ "$1" = "-unpatch" ]; then
+  OLD_NAME="dumbnet"
+  NEW_NAME="dnet"
+  DIR=-1
+else
+  echo "Unknown option to dpatch." >&2
+  exit 1
+fi
+
+if [ -n "$2" ]; then
+  cd "$2"
+fi
+
+for MF in $(find . -name Makefile.am -or -name "*.[38]" -or -name "setup.py.in" -or -name "*-config.in"); do
+  sed -i -e "s/${OLD_NAME}/${NEW_NAME}/g" $MF
+done
+
+for CF in $(find . -name "*.c" -or -name "*.h"); do
+  sed -i -e "s/#include \"${OLD_NAME}\.h\"/#include \"${NEW_NAME}.h\"/" \
+         -e "s/#include <${OLD_NAME}\.h>/#include <${NEW_NAME}.h>/" \
+         -e "s/#include <${OLD_NAME}\//#include <${NEW_NAME}\//" $CF
+done
+
+sed -i -e "s/\"${OLD_NAME}\.h\"/\"${NEW_NAME}.h\"/" python/*.pyx
+
+sed -i -e "/^AC_INIT/ s/${OLD_NAME}/${NEW_NAME}/g" \
+       -e "/^AM_INIT_/ s/${OLD_NAME}/${NEW_NAME}/g" \
+       -e "/^AC_OUTPUT/,$ s/${OLD_NAME}/${NEW_NAME}/g" \
+  configure.in
+
+if [ "$DIR" = 1 ]; then
+  for (( i=0; i<${#OLD_RENAME_FILES[*]}; i++ )); do
+    [ -e ${NEW_RENAME_FILES[$i]} ] || mv ${OLD_RENAME_FILES[$i]} ${NEW_RENAME_FILES[$i]}
+  done
+  for P in $(find . -name "*.[38]"); do
+    sed -i -e "/^\.Sh SEE ALSO/ i$MANPAGENOTE" $P
+  done
+else
+  for (( i=${#OLD_RENAME_FILES[*]}-1; i>=0; i-- )); do
+    [ -e ${OLD_RENAME_FILES[$i]} ] || mv ${NEW_RENAME_FILES[$i]} ${OLD_RENAME_FILES[$i]}
+  done
+  for P in $(find . -name "*.[38]"); do
+    sed -i -e "/^\.Sh COMPATIBILITY/,+9 d" $P
+  done
+fi
+
+sed -i -e "s/libd[a-z]*\.sourceforge\.net/libdnet.sourceforge.net/" python/setup.py.in
+
+exit 0

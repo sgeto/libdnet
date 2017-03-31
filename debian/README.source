@@ -1,0 +1,6 @@
+The changes to the upstream source of this Debian package are managed
+by the patch management system 'dpatch'. See the dpatch documentation
+at /usr/share/doc/dpatch/README.source.gz for further information on
+how to comfortably create new patches or edit existing ones.
+
+ -- Jan Christoph Nordholz, 23 Aug 2009

@@ -1,0 +1,179 @@
+libdumbnet (1.12-4build1) trusty; urgency=medium
+
+  * Rebuild to drop files installed into /usr/share/pyshared.
+
+ -- Matthias Klose <doko@ubuntu.com>  Sun, 23 Feb 2014 13:48:12 +0000
+
+libdumbnet (1.12-4) unstable; urgency=low
+
+  * QA upload.
+    - Set Maintainer to Debian QA Group.
+  * Convert to dh_python2 (Closes: #616861).
+  * debian/rules:
+    - Pass --add-missing parameter to automake call (Closes: #713367).
+
+ -- Luca Falavigna <dktrkranz@debian.org>  Sun, 07 Jul 2013 14:20:17 +0200
+
+libdumbnet (1.12-3.1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Don't ship .la files.
+
+ -- Luk Claes <luk@debian.org>  Fri, 01 Jul 2011 19:43:39 +0200
+
+libdumbnet (1.12-3) unstable; urgency=low
+
+  * Restore lost libdumbnet.so symlink in the -dev package.
+    Closes: #542972.
+  * Provide dumbnet-config again, provide the old name 'dnet-config'
+    as a symlink, and make it print the correct -l parameter (i.e.
+    include it into the changed files of the 01rename_library patch).
+    Closes: #543050.
+  * Write a terse manpage for dumbnet-config.
+  * Bump Standards Version to 3.8.3.
+    * Add a README.source file.
+
+ -- Jan Christoph Nordholz <hesso@pool.math.tu-berlin.de>  Sun, 23 Aug 2009 00:09:20 +0200
+
+libdumbnet (1.12-2) unstable; urgency=low
+
+  * kfreebsd has <stropts.h>, too, so the ./configure check to decide
+    between tun-solaris and tun-bsd is bogus. For the time being patch
+    ./configure.in to drop that test and choose tun-bsd right away.
+
+ -- Jan Christoph Nordholz <hesso@pool.math.tu-berlin.de>  Wed, 29 Jul 2009 13:56:43 +0200
+
+libdumbnet (1.12-1) unstable; urgency=low
+
+  * New upstream version.
+  * Update upstream location in all Debian files, but do not overwrite
+    the upstream README - add a note to README.Debian instead.
+  * Add a symbols file.
+  * Bump Standards Version to 3.8.2.
+
+ -- Jan Christoph Nordholz <hesso@pool.math.tu-berlin.de>  Sat, 25 Jul 2009 13:51:29 +0200
+
+libdumbnet (1.11-1) UNRELEASED; urgency=low
+
+  * Adopt the package. Closes: #474128.
+  * New upstream version.
+  * Completely rework the packaging. Use dpatch for patch management.
+  * Thoroughly revise debian/copyright.
+  * Accomplish the Debian-specific library renaming by modifying the
+    .am files and rerunning the whole auto-toolchain. This is the cleanest
+    way to do this and produces the smallest distro diff.
+    -> New dpatch (script): 01rename_library.sh
+  * Activate the python module build (closes: #388541):
+    * Configure --with-python.
+    * Patch the .pyx code to avoid using the reserved keyword 'type' as a
+      mundane identifier.
+      -> New dpatch: 02python_type_is_reserved
+    * Patch the python Makefile to build against all current python versions.
+      -> New dpatch: 03build_all_python_versions
+  * Use debhelper v7.
+  * Standards Version is now 3.8.1.
+
+ -- Jan Christoph Nordholz <hesso@pool.math.tu-berlin.de>  Sat, 28 Mar 2009 01:51:45 +0100
+
+libdumbnet (1.8-2) unstable; urgency=low
+
+  * QA upload.
+    + Set maintainer to Debian QA Group <packages@qa.debian.org>.
+  * Move {Source-Version} to {binary:Version}.
+  * Change pwd to CURDIR in rules.
+  * Add {shlibs:Depends} to dev package.
+  * Add watch file.
+  * Remove redundant section: libs from binary package.
+  * Bump debhelper build-dep and compat to 5.
+  * Bump Standards Version to 3.8.0.
+
+ -- Barry deFreese <bdefreese@debian.org>  Fri, 23 Jan 2009 18:00:52 -0500
+
+libdumbnet (1.8-1.5) unstable; urgency=low
+
+  * Porter NMU.
+  * Added support for GNU/kFreeBSD, patch from the BTS (closes: bug#341598).
+
+ -- Aurelien Jarno <aurel32@debian.org>  Sun, 10 Dec 2006 20:38:30 +0100
+
+libdumbnet (1.8-1.4) unstable; urgency=low
+
+  * NMU
+  * Fix a bug in addr_btos() (Closes: #364821)
+
+ -- Julien Danjou <acid@debian.org>  Tue, 16 May 2006 13:56:32 +0200
+
+libdumbnet (1.8-1.3) unstable; urgency=low
+
+  * Fixed SONAME problem by fixing the -version-info number in
+    src/Makefile.am (Closes: #289777)
+
+ -- Javier Fernandez-Sanguino Pen~a <jfs@computer.org>  Tue, 11 Jan 2005 16:13:41 +0100
+
+libdumbnet (1.8-1.2) unstable; urgency=low
+
+  * Introduce AM_MAINTAINER_MODE in configure.in to avoid timestamp
+    skew of the auto* files, also touch ac files in debian/rules configure
+    just in case (Closes: #289794)
+  * Check if symlinks exist before creating them (in config.status
+    and distclean target in debian/rules)
+
+ -- Javier Fernandez-Sanguino Pen~a <jfs@computer.org>  Tue, 11 Jan 2005 14:55:00 +0100
+
+libdumbnet (1.8-1.1) unstable; urgency=low
+
+  * NMU with maintainer's approval.
+  * New upstream release (Closes: #253572)
+   - Updated config.sub and config.guess from automake 1.7
+   - Fixed configure.in since there is no need now to normalize LTLIBOBJS
+   - Rerun aclocal, automake and autoconf
+   - Updated debian/patches/libdumbnet.patch
+   - Change debian/rules so that it will only distclean if the Makefile
+     is there and so that it will create the symlinks it needs for cleaning
+     if they are not available (will happen if the 'Makefile distclean' breaks
+     at some point)
+
+ -- Javier Fernandez-Sanguino Pen~a <jfs@computer.org>  Thu, 23 Dec 2004 11:42:14 +0100
+
+libdumbnet (1.7-3) unstable; urgency=low
+
+  * Fix acinclude.m4, aclocal.m4, configure.in, and configure to test
+    correctly for PF_PACKET support on GNU/Linux.  This will cause
+    libdumbnet to include the right eth-$ARCH.o file.  (Closes: Bug#219303)
+
+ -- Simon Law <sfllaw@debian.org>  Thu, 13 Nov 2003 01:44:56 -0500
+
+libdumbnet (1.7-2) unstable; urgency=low
+
+  * Use netinet/* headers instead of linux/* headers in src/fw-ipchains.c
+
+ -- Simon Law <sfllaw@debian.org>  Thu, 09 Oct 2003 09:52:00 -0400
+
+libdumbnet (1.7-1) unstable; urgency=low
+
+  * New upstream release.  (Closes: Bug#193777)
+  * Added a src/net/sock.h since its contents are unneeded.
+    (Closes: Bug#207698)
+  * Removed the period from the short description.
+  * Moved libdumbnet-dev to libdevel.
+  * Makefile.am: Set SONAME to 1.0.0.
+
+ -- Simon Law <sfllaw@debian.org>  Tue,  7 Oct 2003 17:52:59 -0400
+
+libdumbnet (1.5-2) unstable; urgency=low
+
+  * Wrote a better description for libdumbnet-dev. (Closes: Bug#162995)
+  * Mentioned the namespace conflict with libdnet so that it will
+    show up on an `apt-cache search libdnet`
+
+ -- Simon Law <sfllaw@debian.org>  Fri, 04 Oct 2002 23:22:36 -0400
+
+libdumbnet (1.5-1) unstable; urgency=low
+
+  * Initial Release.  (Closes: Bug#157350, Bug#157351)
+  * Renamed this library to libdumbnet to avoid namespace conflicts.
+  * Makefile.am configure.in: Now uses libtool to build shared libraries
+  * Makefile.am: Set SONAME to 0.0.0
+
+ -- Simon Law <sfllaw@debian.org>  Sat, 28 Sep 2002 12:23:08 -0400
+

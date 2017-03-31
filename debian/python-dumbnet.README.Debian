@@ -1,0 +1,8 @@
+python bindings for libdumbnet
+------------------------------
+
+Because the dnet library is called dumbnet in Debian and its derivatives,
+the python module carries the same name for consistency. Python programs
+might need some tweaking on the import directives.
+
+ -- Jan Christoph Nordholz <hesso@pool.math.tu-berlin.de>  Sun, 29 Mar 2009

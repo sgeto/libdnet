@@ -1,0 +1,17 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 04kfreebsd.dpatch by  <hesso@pool.math.tu-berlin.de>
+##
+## DP: Add build support for kfreebsd.
+
+@DPATCH@
+--- libdumbnet-1.11.orig/configure.in
++++ libdumbnet-1.11/configure.in
+@@ -244,7 +244,7 @@
+ elif test "$ac_cv_header_netinet_ip_fw_h" = yes ; then
+      dnl XXX - ipfw2 support later...
+      case "$host_os" in
+-     *freebsd5*)
++     *freebsd5* | *kfreebsd*)
+ 	AC_LIBOBJ([fw-none]) ;;
+      *)
+ 	AC_LIBOBJ([fw-ipfw]) ;;

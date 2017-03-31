@@ -1,0 +1,103 @@
+#!/usr/bin/make -f
+
+.PHONY: clean configure build install binary binary-arch binary-indep
+
+include /usr/share/dpatch/dpatch.make
+
+ifeq ($(filter noopt,$(DEB_BUILD_OPTIONS)),)
+CFLAGS:=-O2 -g
+else
+CFLAGS:=-O0 -g
+endif
+
+configure: configure-stamp
+build: build-stamp
+install: install-stamp
+binary: binary-arch binary-indep
+
+configure-stamp: patch-stamp
+	dh_testdir
+	dh_prep -k
+	cp /usr/share/misc/config.sub \
+	   /usr/share/misc/config.guess \
+	    config/
+	aclocal -I . -I config
+	libtoolize -c
+	autoheader
+	automake --add-missing
+	autoconf
+	./configure CFLAGS="$(CFLAGS)" --prefix=/usr --mandir=/usr/share/man --with-python
+	rm -f python/*.c
+	touch $@
+
+build-stamp: configure-stamp
+	dh_testdir
+	$(MAKE)
+ifeq ($(filter nocheck,$(DEB_BUILD_OPTIONS)),)
+	# Running test suite. Errors are being ignored because several tests
+	# are bound to fail:
+	# * check_addr: fails because glibc gethostbyname() accepts malformed
+	#   IPs
+	# * check_ip: fails because test includes binding to a RAW socket
+	#   which requires CAP_NET_ADMIN
+	# * check_fw: fails because Linux doesn't provide a simple userspace
+	#   fw API (and libdumbnet therefore includes its fw-none module which
+	#   just returns ENOSYS)
+	-$(MAKE) -C test/check check-am
+endif
+	touch $@
+
+install-stamp: build-stamp
+	dh_testdir
+	touch $@
+
+binary-indep:
+
+binary-arch: install-stamp
+	dh_testdir
+	dh_testroot
+	$(MAKE) DESTDIR=$$(pwd)/debian/libdumbnet1 install
+	mkdir -p debian/libdumbnet-dev/usr/lib \
+	         debian/libdumbnet-dev/usr/share/doc \
+	         debian/libdumbnet-dev/usr/share/man/man1
+	mkdir -p debian/python-dumbnet/usr/lib
+	mv debian/libdumbnet1/usr/include \
+	   debian/libdumbnet1/usr/sbin \
+	   debian/libdumbnet1/usr/bin \
+	    debian/libdumbnet-dev/usr/
+	mv debian/libdumbnet1/usr/share/man/* \
+	    debian/libdumbnet-dev/usr/share/man/
+	mv debian/libdumbnet1/usr/lib/libdumbnet.a \
+	   debian/libdumbnet1/usr/lib/libdumbnet.so \
+	    debian/libdumbnet-dev/usr/lib/
+	mv debian/libdumbnet1/usr/lib/python* \
+	    debian/python-dumbnet/usr/lib
+	cp debian/dumbnet-config.1 debian/libdumbnet-dev/usr/share/man/man1/
+	ln -s dumbnet-config.1 debian/libdumbnet-dev/usr/share/man/man1/dnet-config.1
+	ln -s libdumbnet1 debian/libdumbnet-dev/usr/share/doc/libdumbnet-dev
+	ln -s dumbnet-config debian/libdumbnet-dev/usr/bin/dnet-config
+	dh_installchangelogs
+	dh_installdocs TODO README
+	dh_python2 -ppython-dumbnet
+	for E in debian/python-dumbnet/usr/lib/python*; do \
+	  rm -f $$E/site-packages/*egg-info; \
+	done
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_makeshlibs
+	dh_installdeb
+	dh_shlibdeps
+	dh_md5sums
+	dh_gencontrol
+	dh_builddeb
+
+clean:
+	rm -f *-stamp
+	[ ! -f Makefile ] || $(MAKE) clean maintainer-clean
+	rm -rf autom4te.cache/ config/config.sub config/config.guess \
+	       configure config/ltmain.sh aclocal.m4 python/*.c \
+	       python/Makefile python/setup.py
+	find . -\( -name Makefile.in -or -name config.h.in -\) -print0 | xargs -0r -- rm -f
+	dpatch deapply-all
+	dh_clean

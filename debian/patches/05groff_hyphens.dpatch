@@ -1,0 +1,101 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 05groff_hyphens.dpatch by  <hesso@pool.math.tu-berlin.de>
+##
+## DP: Distinguish between groff hyphens and minus signs, just
+## DP: to keep lintian happy.
+
+@DPATCH@
+--- libdumbnet-1.12.orig/man/dumbnet.3	2009-05-18 05:11:34.728007033 +0200
++++ libdumbnet-1.12/man/dumbnet.3	2009-05-18 05:12:22.789006061 +0200
+@@ -359,7 +359,7 @@
+ .Fa b 
+ into
+ .Fa buf ,
+-returning the total number of bytes read, or -1 on failure.
++returning the total number of bytes read, or \-1 on failure.
+ .Pp
+ .Fn blob_write
+ writes
+@@ -369,7 +369,7 @@
+ to blob
+ .Fa b ,
+ advancing the current offset. It returns the number of bytes written,
+-or -1 on failure.
++or \-1 on failure.
+ .Pp
+ .Fn blob_seek
+ repositions the offset within blob
+@@ -380,7 +380,7 @@
+ .Fa whence
+ (see
+ .Xr lseek 2
+-for details), returning the new absolute offset, or -1 on failure.
++for details), returning the new absolute offset, or \-1 on failure.
+ .Pp
+ .Fn blob_index
+ returns the offset of the first occurence in blob 
+@@ -389,7 +389,7 @@
+ .Fa buf
+ of length
+ .Fa len ,
+-or -1 on failure.
++or \-1 on failure.
+ .Pp
+ .Fn blob_rindex
+ returns the offset of the last occurence in blob 
+@@ -398,7 +398,7 @@
+ .Fa buf
+ of length
+ .Fa len ,
+-or -1 on failure.
++or \-1 on failure.
+ .Pp
+ .Fn blob_pack
+ converts and writes, and
+@@ -407,7 +407,7 @@
+ .Fa b
+ according to the given format
+ .Fa fmt
+-as described below, returning 0 on success, and -1 on failure.
++as described below, returning 0 on success, and \-1 on failure.
+ .Pp
+ The format string is composed of zero or more directives: ordinary
+ characters (not
+@@ -820,7 +820,7 @@
+ .Fn eth_send
+ and
+ .Fn ip_send
+-return the length of the datagram successfully sent, or -1 on failure.
++return the length of the datagram successfully sent, or \-1 on failure.
+ .Pp
+ .Fn arp_loop ,
+ .Fn fw_loop ,
+@@ -835,7 +835,7 @@
+ .Pp
+ .Fn ip_add_option
+ returns the length of the inserted option (which may have been padded
+-with NOPs for memory alignment) or -1 on failure.
++with NOPs for memory alignment) or \-1 on failure.
+ .Pp
+ .Fn rand_uint8 ,
+ .Fn rand_uint16 ,
+@@ -845,7 +845,7 @@
+ .Pp
+ All other 
+ .Nm
+-routines return 0 on success, or -1 on failure.
++routines return 0 on success, or \-1 on failure.
+ .Sh COMPATIBILITY
+ The library was originally named
+ .Xr dnet
+--- libdumbnet-1.12.orig/test/dumbnet/dumbnet.8	2009-05-18 05:16:36.509006302 +0200
++++ libdumbnet-1.12/test/dumbnet/dumbnet.8	2009-05-18 05:16:45.664006443 +0200
+@@ -244,7 +244,7 @@
+ dd if=ping.pkt of=ping.data bs=20 skip=1
+ 
+ # Fragment IP payload
+-split -b 24 ping.data p.
++split \-b 24 ping.data p.
+ 
+ # Send fragments
+ dumbnet ip id 1 off 0+ proto icmp src 1.2.3.4 dst 5.6.7.8 < p.aa | \\

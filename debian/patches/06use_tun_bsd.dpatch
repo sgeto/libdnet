@@ -1,0 +1,23 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 06use_tun_bsd.dpatch by  <hesso@pool.math.tu-berlin.de>
+##
+## DP: The existence of <stropts.h> is no discerning criterion
+## DP: between Solaris and BSD. Debian is only concerned with
+## DP: BSD, so choose that.
+
+@DPATCH@
+--- configure.in	2009-07-29 14:35:15.646148704 +0200
++++ ../configure.in	2009-07-29 13:57:32.549129500 +0200
+@@ -302,11 +302,7 @@
+ if test "$ac_cv_header_linux_if_tun_h" = yes ; then
+ 	AC_LIBOBJ([tun-linux])
+ elif test "$ac_cv_header_net_if_tun_h" = yes ; then
+-	if test "$ac_cv_header_stropts_h" = yes ; then
+-		AC_LIBOBJ([tun-solaris])
+-	else
+-		AC_LIBOBJ([tun-bsd])
+-	fi
++	AC_LIBOBJ([tun-bsd])
+ elif test -c "/dev/tun0" ; then
+ 	AC_LIBOBJ([tun-bsd])
+ else
