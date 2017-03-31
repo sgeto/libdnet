@@ -22,7 +22,7 @@ AC_COPYRIGHT([Copyright 2000 - 2017 The libdnet Developer Community])
 AC_MSG_RESULT(Beginning autoconfiguration process for libdnet-${PACKAGE_VERSION} ...)
 AC_PROG_SHELL
 AC_CONFIG_HEADERS([include/config.h])
-AM_INIT_AUTOMAKE([1.14 foreign no-dependencies nostdinc tar-ustar dist-zip])
+AM_INIT_AUTOMAKE([1.14 foreign no-dependencies tar-ustar dist-zip])
 AM_SILENT_RULES([yes])
 
 # for libtoolize
@@ -302,7 +302,7 @@ else
 fi
 
 AC_CONFIG_FILES([Makefile dnet-config include/Makefile
-    man/Makefile src/Makefile python/Makefile python/setup.py
+    src/Makefile python/Makefile python/setup.py
     test/Makefile test/check/Makefile test/dnet/Makefile])
 AC_CONFIG_COMMANDS([default],[chmod 755 dnet-config],[])
 AC_OUTPUT
