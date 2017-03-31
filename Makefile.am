@@ -1,21 +1,20 @@
 ## $Id: Makefile.am 618 2006-01-15 06:42:19Z dugsong $
 
-include $(top_srcdir)/Makefile.am.common
+ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
 
-ACLOCAL_AMFLAGS = -I m4
+SUBDIRS = include src python test
 
-SUBDIRS =	include man src python test
+bin_SCRIPTS = dnet-config
 
-bin_SCRIPTS =	dnet-config
+man_MANS = dnet.3
 
-EXTRA_DIST =	LICENSE Makefile.am.common acconfig.h
+dnet.3.txt: dnet.3
+	groff -t -e -mdoc -Tascii dnet.3 | col -bx > $@
 
-CLEANFILES =	dnet-config
+EXTRA_DIST = LICENSE acconfig.h $(man_MANS)
 
-AUX_DIST =	$(ac_aux_dir)/acinclude.m4	\
-		$(ac_aux_dir)/config.guess	\
-		$(ac_aux_dir)/config.sub	\
-		$(ac_aux_dir)/install-sh	\
-		$(ac_aux_dir)/ltmain.sh		\
-		$(ac_aux_dir)/missing		\
-		$(ac_aux_dir)/mkinstalldirs
+CLEANFILES = dnet-config
+
+# (GNU make only) Unless we say otherwise, spare us the
+# “Entering/Leaving directory ...” messages
+GNUMAKEFLAGS = $(if $(value VERBOSE),,--no-print-directory)
