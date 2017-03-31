@@ -1,9 +1,8 @@
 ## $Id: Makefile.am 601 2005-02-25 22:44:39Z dugsong $
 
-include $(top_srcdir)/Makefile.am.common
-
-if PYTHON
-# XXX - nasty automake fudging here...
+if ENABLE_PYTHON
+AM_CFLAGS = $(PYTHON_CFLAGS)
+LDADD = $(PYTHON_CFLAGS)
 
 noinst_SCRIPTS = python-build
 
@@ -28,11 +27,13 @@ install-exec-local: python-install
 
 TESTS = test.py
 
-else
+# else
 
-install-exec-local:
+# install-exec-local:
 
 endif
+
+# endif
 
 EXTRA_DIST = dnet.pyx dnet.c setup.py.in test.py
 
