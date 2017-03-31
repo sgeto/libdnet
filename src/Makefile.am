@@ -1,6 +1,4 @@
 
-include $(top_srcdir)/Makefile.am.common
-
 lib_LTLIBRARIES = libdnet.la
 
 libdnet_la_SOURCES = addr-util.c addr.c blob.c ip-util.c ip6.c rand.c
@@ -16,5 +14,5 @@ libdnet_la_SOURCES += dll_info.rc
 libdnet_la_LDFLAGS += -no-undefined -Wl,--output-def,libdnet-1.def
 
 .rc.lo:
-			$(LIBTOOL) --tag=RC --mode=compile $(WINDRES) $< -o $@
+			$(AM_V_GEN)$(LIBTOOL) --mode=compile --silent $(WINDRES) $< -o $@
 endif
