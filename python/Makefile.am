@@ -27,10 +27,6 @@ install-exec-local: python-install
 
 TESTS = test.py
 
-# else
-
-# install-exec-local:
-
 endif
 
 # endif
