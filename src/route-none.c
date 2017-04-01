@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "dnet.h"
+#include "dumbnet.h"
 
 route_t *
 route_open(void)

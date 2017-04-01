@@ -28,7 +28,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "dnet.h"
+#include "dumbnet.h"
 
 #ifndef MAXHOSTNAMELEN
 # define MAXHOSTNAMELEN	256

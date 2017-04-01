@@ -16,7 +16,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "dnet.h"
+#include "dumbnet.h"
 
 struct ip_handle {
 	int	fd;

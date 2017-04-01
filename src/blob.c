@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "dnet.h"
+#include "dumbnet.h"
 
 static void	*(*bl_malloc)(size_t) = malloc;
 static void	*(*bl_realloc)(void *, size_t) = realloc;

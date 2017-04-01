@@ -1,0 +1,36 @@
+#! /bin/sh /usr/share/dpatch/dpatch-run
+## 03build_all_python_versions.dpatch by  <hesso@pool.math.tu-berlin.de>
+##
+## DP: Change the upstream automake Makefiles to build multiple versions
+## DP: of the python module, one for each supported python version.
+
+@DPATCH@
+--- libdumbnet-1.11.orig/python/Makefile.am	2009-03-29 01:31:22.141871504 +0100
++++ libdumbnet-1.11/python/Makefile.am	2009-03-29 01:40:23.911281752 +0100
+@@ -8,10 +8,12 @@
+ noinst_SCRIPTS = python-build
+ 
+ $(srcdir)/dumbnet.c: $(srcdir)/dumbnet.pyx
+-	pyrexc $(srcdir)/dumbnet.pyx
+ 
+-python-build: $(srcdir)/dumbnet.c
+-	$(PYTHON) setup.py build
++python-build: $(srcdir)/dumbnet.pyx
++	for PV in $(shell cd .. && pyversions -r); do \
++	  $$PV /usr/bin/pyrexc $(srcdir)/dumbnet.pyx; \
++	  $$PV setup.py build; \
++	done
+ 	touch python-build
+ 
+ python-clean:
+@@ -22,7 +24,9 @@
+ distclean: clean
+ 
+ python-install:
+-	$(PYTHON) setup.py install --prefix=$(DESTDIR)$(prefix)
++	for PV in $(shell cd .. && pyversions -r); do \
++	  $$PV setup.py install --prefix=$(DESTDIR)$(prefix); \
++	done
+ 
+ install-exec-local: python-install
+ 

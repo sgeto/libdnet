@@ -15,7 +15,7 @@
 #include <errno.h>
 #include <stdlib.h>
 
-#include "dnet.h"
+#include "dumbnet.h"
 #include <winsock2.h>
 #include "pcap.h"
 #include <Packet32.h>

@@ -10,7 +10,7 @@
  */
 
 #include "config.h"
-#include "dnet.h"
+#include "dumbnet.h"
 
 #ifdef _WIN32
 /* XXX */

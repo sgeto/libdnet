@@ -4,16 +4,16 @@ ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
 
 SUBDIRS = include src python test
 
-bin_SCRIPTS = dnet-config
+bin_SCRIPTS = dumbnet-config
 
-man_MANS = dnet-config.1 dnet.3
+man_MANS = dumbnet-config.1 dumbnet.3
 
-dnet.3.txt: dnet.3
-	groff -t -e -mdoc -Tascii dnet.3 | col -bx > $@
+dumbnet.3.txt: dumbnet.3
+	groff -t -e -mdoc -Tascii dumbnet.3 | col -bx > $@
 
 EXTRA_DIST = LICENSE acconfig.h $(man_MANS)
 
-CLEANFILES = dnet-config
+CLEANFILES = dumbnet-config
 
 # (GNU make only) Unless we say otherwise, spare us the
 # “Entering/Leaving directory ...” messages

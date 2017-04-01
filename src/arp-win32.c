@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "dnet.h"
+#include "dumbnet.h"
 
 struct arp_handle {
 	MIB_IPNETTABLE *iptable;

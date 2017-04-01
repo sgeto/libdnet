@@ -22,4 +22,4 @@ check_ip_SOURCES = check_ip.c
 check_rand_SOURCES = check_rand.c
 check_route_SOURCES = check_route.c
 
-LDADD = $(top_builddir)/src/libdnet.la $(CHECK_LIBS)
+LDADD = $(top_builddir)/src/libdumbnet.la $(CHECK_LIBS)

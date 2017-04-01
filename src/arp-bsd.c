@@ -33,7 +33,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "dnet.h"
+#include "dumbnet.h"
 
 struct arp_handle {
 	int	fd;

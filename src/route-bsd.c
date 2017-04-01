@@ -45,7 +45,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "dnet.h"
+#include "dumbnet.h"
 
 /* Unix Network Programming, 3rd edition says that sockaddr structures in
    rt_msghdr should be padded so their addresses start on a multiple of

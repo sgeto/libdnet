@@ -24,7 +24,7 @@
 #include <stropts.h>
 #include <unistd.h>
 
-#include "dnet.h"
+#include "dumbnet.h"
 
 #define DEV_TUN		"/dev/tun"
 #define DEV_IP		"/dev/ip"

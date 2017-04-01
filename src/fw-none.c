@@ -12,7 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "dnet.h"
+#include "dumbnet.h"
 
 fw_t *
 fw_open(void)

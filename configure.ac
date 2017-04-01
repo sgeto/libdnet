@@ -7,19 +7,19 @@ dnl
 dnl Process this file with autoconf to produce a configure script.
 
 AC_INIT(
-    [libdnet],
+    [libdumbnet],
     [1.12],
-    [https://github.com/sgeto/libdnet/issues],
-    [libdnet],
-    [https://github.com/sgeto/libdnet])
+    [https://github.com/sgeto/libdumbnet/issues],
+    [libdumbnet],
+    [https://github.com/sgeto/libdumbnet])
 
-AC_CONFIG_SRCDIR([include/dnet.h])
+AC_CONFIG_SRCDIR([include/dumbnet.h])
 AC_CONFIG_AUX_DIR([build-aux])
 AC_SUBST(ac_aux_dir)
 AC_PREREQ([2.69])
 LT_PREREQ([2.4.2])
-AC_COPYRIGHT([Copyright 2000 - 2017 The libdnet Developer Community])
-AC_MSG_RESULT(Beginning autoconfiguration process for libdnet-${PACKAGE_VERSION} ...)
+AC_COPYRIGHT([Copyright 2000 - 2017 The libdumbnet Developer Community])
+AC_MSG_RESULT(Beginning autoconfiguration process for libdumbnet-${PACKAGE_VERSION} ...)
 AC_PROG_SHELL
 AC_CONFIG_HEADERS([include/config.h])
 AM_INIT_AUTOMAKE([1.14 foreign no-dependencies tar-ustar dist-zip])
@@ -301,10 +301,10 @@ else
     AC_LIBOBJ([tun-none])
 fi
 
-AC_CONFIG_FILES([Makefile dnet-config include/Makefile
+AC_CONFIG_FILES([Makefile dumbnet-config include/Makefile
     src/Makefile python/Makefile python/setup.py
-    test/Makefile test/check/Makefile test/dnet/Makefile])
-AC_CONFIG_COMMANDS([default],[chmod 755 dnet-config],[])
+    test/Makefile test/check/Makefile test/dumbnet/Makefile])
+AC_CONFIG_COMMANDS([default],[chmod 755 dumbnet-config],[])
 AC_OUTPUT
 
 AC_MSG_RESULT([

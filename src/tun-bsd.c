@@ -18,7 +18,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "dnet.h"
+#include "dumbnet.h"
 
 struct tun {
 	int               fd;

@@ -24,7 +24,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "dnet.h"
+#include "dumbnet.h"
 
 /*
  * XXX - cope with moving pf API

@@ -36,7 +36,7 @@
 
 #define KMEM_NAME	"/dev/kmem"
 
-#include "dnet.h"
+#include "dumbnet.h"
 
 #if !defined(fi_saddr) && !defined(fi_daddr)
 # define fi_saddr	fi_src.s_addr

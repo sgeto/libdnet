@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "dnet.h"
+#include "dumbnet.h"
 #include "pcap.h"
 #include <Packet32.h>
 #include <ntddndis.h>
@@ -434,7 +434,7 @@ intf_close(intf_t *intf)
 	return (NULL);
 }
 
-/* Converts a libdnet interface name to its pcap equivalent. The pcap name is
+/* Converts a libdumbnet interface name to its pcap equivalent. The pcap name is
    stored in pcapdev up to a length of pcapdevlen, including the terminating
    '\0'. Returns -1 on error. */
 int

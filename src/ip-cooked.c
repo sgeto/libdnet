@@ -17,7 +17,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "dnet.h"
+#include "dumbnet.h"
 #include "queue.h"
 
 struct ip_intf {

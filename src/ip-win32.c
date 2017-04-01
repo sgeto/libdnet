@@ -13,7 +13,7 @@
 #include <errno.h>
 #include <stdlib.h>
 
-#include "dnet.h"
+#include "dumbnet.h"
 
 struct ip_handle {
 	WSADATA			wsdata;

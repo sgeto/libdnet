@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "dnet.h"
+#include "dumbnet.h"
 #include "crc32ct.h"
 
 /* CRC-32C (Castagnoli). Public domain. */

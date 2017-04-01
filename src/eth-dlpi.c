@@ -33,7 +33,7 @@
 #include <stropts.h>
 #include <unistd.h>
 
-#include "dnet.h"
+#include "dumbnet.h"
 
 #ifndef INFTIM
 #define INFTIM	-1

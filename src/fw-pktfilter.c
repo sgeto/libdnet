@@ -17,7 +17,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "dnet.h"
+#include "dumbnet.h"
 
 #define PKTFILTER_PIPE "\\\\.\\pipe\\PktFltPipe"	
 #define MAX_RULE_LENGTH 256

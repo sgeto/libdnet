@@ -8,7 +8,7 @@
 
 #include "config.h"
 
-#include "dnet.h"
+#include "dumbnet.h"
 
 #define IP6_IS_EXT(n)	\
 	((n) == IP_PROTO_HOPOPTS || (n) == IP_PROTO_DSTOPTS || \

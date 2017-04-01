@@ -7,7 +7,7 @@
  */
 
 #ifdef _WIN32
-#include "dnet_winconfig.h"
+#include "dumbnet_winconfig.h"
 #else
 #include "config.h"
 #endif
@@ -48,7 +48,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "dnet.h"
+#include "dumbnet.h"
 
 /* XXX - Tru64 */
 #if defined(SIOCRIPMTU) && defined(SIOCSIPMTU)

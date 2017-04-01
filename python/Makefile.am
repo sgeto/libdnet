@@ -6,10 +6,10 @@ LDADD = $(PYTHON_CFLAGS)
 
 noinst_SCRIPTS = python-build
 
-$(srcdir)/dnet.c: $(srcdir)/dnet.pyx
-	pyrexc $(srcdir)/dnet.pyx || pyrexc.py $(srcdir)/dnet.pyx
+$(srcdir)/dumbnet.c: $(srcdir)/dumbnet.pyx
+	pyrexc $(srcdir)/dumbnet.pyx || pyrexc.py $(srcdir)/dumbnet.pyx
 
-python-build: $(srcdir)/dnet.c
+python-build: $(srcdir)/dumbnet.c
 	$(PYTHON) setup.py build
 	touch python-build
 
@@ -31,6 +31,6 @@ endif
 
 # endif
 
-EXTRA_DIST = dnet.pyx dnet.c setup.py.in test.py
+EXTRA_DIST = dumbnet.pyx dumbnet.c setup.py.in test.py
 
 DISTCLEANFILES = *~

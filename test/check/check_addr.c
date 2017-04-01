@@ -9,7 +9,7 @@
 #endif
 
 
-#include <dnet.h>
+#include <dumbnet.h>
 
 #include <stdio.h>
 #include <stdlib.h>

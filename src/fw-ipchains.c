@@ -33,7 +33,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "dnet.h"
+#include "dumbnet.h"
 
 #define PROC_IPCHAINS_FILE	"/proc/net/ip_fwchains"
 

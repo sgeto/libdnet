@@ -20,7 +20,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "dnet.h"
+#include "dumbnet.h"
 
 struct eth_handle {
 	char	device[16];

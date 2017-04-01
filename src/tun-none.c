@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "dnet.h"
+#include "dumbnet.h"
 
 tun_t *
 tun_open(struct addr *src, struct addr *dst, int mtu)

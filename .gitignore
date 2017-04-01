@@ -14,7 +14,7 @@
 *.lo
 
 # Executables
-dnet-config
+dumbnet-config
 *.exe
 *.out
 *.app
@@ -46,7 +46,7 @@ build-aux
 
 python/build
 python/python-build
-python/dnet.c
+python/dumbnet.c
 python/setup.py
 
 m4/libtool.m4
@@ -60,7 +60,7 @@ include/config.h.in
 include/config.h.in~
 include/stamp-h1
 
-test/dnet/dnet
+test/dumbnet/dumbnet
 
 # Random stuff
 .prebuild*

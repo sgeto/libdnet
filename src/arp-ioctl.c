@@ -38,7 +38,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "dnet.h"
+#include "dumbnet.h"
 
 #ifdef HAVE_LINUX_PROCFS
 #define PROC_ARP_FILE	"/proc/net/arp"

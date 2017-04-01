@@ -28,7 +28,7 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "dnet.h"
+#include "dumbnet.h"
 
 #define ADDR_ISHOST(a)	(((a)->addr_type == ADDR_TYPE_IP &&	\
 			  (a)->addr_bits == IP_ADDR_BITS) ||	\

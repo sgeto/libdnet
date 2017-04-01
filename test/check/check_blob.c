@@ -1,7 +1,7 @@
 
 #include <sys/types.h>
 
-#include <dnet.h>
+#include <dumbnet.h>
 
 #include <stdio.h>
 #include <stdlib.h>

@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "dnet.h"
+#include "dumbnet.h"
 
 eth_t *
 eth_open(const char *device)
