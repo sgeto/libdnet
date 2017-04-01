@@ -6,7 +6,7 @@ SUBDIRS = include src python test
 
 bin_SCRIPTS = dnet-config
 
-man_MANS = dnet.3
+man_MANS = dnet-config.1 dnet.3
 
 dnet.3.txt: dnet.3
 	groff -t -e -mdoc -Tascii dnet.3 | col -bx > $@
