@@ -199,7 +199,7 @@ if test "$MINGW" != yes ; then
 fi
 
 dnl Check for arp interface.
-if test "$ac_cv_header_iphlpapi_h" = yes ; then
+if test "$MINGW" = yes ; then
     AC_LIBOBJ([arp-win32])
 elif test "$ac_cv_dnet_ioctl_arp" = yes ; then
     AC_LIBOBJ([arp-ioctl])
@@ -210,7 +210,7 @@ else
 fi
 
 dnl Check for Ethernet interface.
-if test "$ac_cv_header_iphlpapi_h" = yes ; then
+if test "$MINGW" = yes ; then
     AC_LIBOBJ([eth-win32])
 elif test "$ac_cv_header_net_pfilt_h" = yes ; then
     AC_LIBOBJ([eth-pfilt])
@@ -230,8 +230,8 @@ else
 fi
 
 dnl Check for firewall interface.
-if test "$ac_cv_header_iphlpapi_h" = yes ; then
-        AC_LIBOBJ([fw-pktfilter])
+if test "$MINGW" = yes ; then
+    AC_LIBOBJ([fw-pktfilter])
 elif test "$ac_cv_header_net_pfvar_h" = yes ; then
     AC_LIBOBJ([fw-pf])
 elif test "$ac_cv_header_netinet_ip_fw_h" = yes ; then
@@ -255,14 +255,14 @@ else
 fi
 
 dnl Check for network interface interface.
-if test "$ac_cv_header_iphlpapi_h" = yes ; then
+if test "$MINGW" = yes ; then
     AC_LIBOBJ([intf-win32])
 else
     AC_LIBOBJ([intf])
 fi
 
 dnl Check for raw IP interface.
-if test "$ac_cv_header_iphlpapi_h" = yes ; then
+if test "$MINGW" = yes ; then
     AC_LIBOBJ([ip-win32])
 elif test "$ac_cv_dnet_rawip_cooked" = yes ; then
     AC_LIBOBJ([ip-cooked])
@@ -271,7 +271,7 @@ else
 fi
 
 dnl Check for routing interface.
-if test "$ac_cv_header_iphlpapi_h" = yes ; then
+if test "$MINGW" = yes ; then
     AC_LIBOBJ([route-win32])
 elif test "$ac_cv_dnet_route_h_has_rt_msghdr" = yes ; then
     AC_LIBOBJ([route-bsd])
