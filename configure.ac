@@ -151,14 +151,7 @@ AM_CONDITIONAL([ENABLE_CHECK], [test "$enable_check" = "yes"])
 
 dnl Checks for header files.
 AC_HEADER_STDC
-if test "$MINGW" = yes ; then
-    AC_CHECK_HEADERS([windows.h iphlpapi.h], [], [],
-                     [[#ifdef HAVE_WINDOWS_H
-                      # include <windows.h>
-                      #endif
-                      ]])
-    AC_CHECK_HEADERS([winsock2.h])
-else
+if test "$MINGW" != yes ; then
     AC_CHECK_HEADERS(fcntl.h unistd.h)
     AC_CHECK_HEADERS(sys/bufmod.h sys/dlpi.h sys/dlpihdr.h sys/dlpi_ext.h \
         sys/ioctl.h sys/mib.h sys/ndd_var.h sys/socket.h sys/sockio.h \
