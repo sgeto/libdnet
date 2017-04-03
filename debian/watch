@@ -1,3 +1,0 @@
-version=3
-http://code.google.com/p/libdnet/downloads/list \
- http://libdnet.googlecode.com/files/libdnet-([0-9.]*).tgz
