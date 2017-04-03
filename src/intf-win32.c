@@ -6,8 +6,14 @@
  * $Id: intf-win32.c 632 2006-08-10 04:36:52Z dugsong $
  */
 
+#ifndef HAVE_STRLCPY
+int	strlcpy(char *, const char *, int);
+#endif
+
 #include "config.h"
 
+#include <winsock2.h>
+#include <windows.h>
 #include <iphlpapi.h>
 
 #include <ctype.h>

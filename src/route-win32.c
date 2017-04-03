@@ -11,8 +11,14 @@
 #endif
 #define _WIN32_WINNT 0x0600
 
+#ifndef HAVE_STRLCPY
+int	strlcpy(char *, const char *, int);
+#endif
+
 #include "config.h"
 
+#include <winsock2.h>
+#include <windows.h>
 #include <ntddndis.h>
 #include <naptypes.h>
 #include <ws2tcpip.h>

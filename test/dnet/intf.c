@@ -6,6 +6,14 @@
  * $Id: intf.c 473 2004-01-13 06:51:56Z dugsong $
  */
 
+#ifndef HAVE_STRLCAT
+int	strlcat(char *, const char *, int);
+#endif
+
+#ifndef HAVE_STRLCPY
+int	strlcpy(char *, const char *, int);
+#endif
+
 #include "config.h"
 
 #include <sys/types.h>
