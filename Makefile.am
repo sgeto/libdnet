@@ -6,12 +6,12 @@ SUBDIRS = include src python test
 
 bin_SCRIPTS = dnet-config
 
-man_MANS = dnet-config.1 dnet.3
+man_MANS = doc/dnet-config.1 doc/dnet.3 doc/dnet.8
 
 dnet.3.txt: dnet.3
 	groff -t -e -mdoc -Tascii dnet.3 | col -bx > $@
 
-EXTRA_DIST = LICENSE acconfig.h $(man_MANS)
+EXTRA_DIST = README.md LICENSE doc/THANKS doc/TODO $(m4data_DATA) $(man_MANS)
 
 CLEANFILES = dnet-config
 
