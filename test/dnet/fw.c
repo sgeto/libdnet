@@ -6,10 +6,6 @@
  * $Id: fw.c 577 2005-02-14 20:45:04Z dugsong $
  */
 
-#ifndef HAVE_STRLCPY
-int	strlcpy(char *, const char *, int);
-#endif
-
 #include "config.h"
 
 #include <sys/types.h>
@@ -22,6 +18,10 @@ int	strlcpy(char *, const char *, int);
 
 #include "dnet.h"
 #include "mod.h"
+
+#ifndef HAVE_STRLCPY
+int	strlcpy(char *, const char *, int);
+#endif
 
 static void
 usage(void)
