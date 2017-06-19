@@ -45,15 +45,21 @@ case "$host_os" in
         *) MINGW=no;;
 esac
 
-dnl Initialize and Handle the --prefix=... option
+dnl Guess the root install directory (if none is provided)
 if test "${prefix}" = "NONE"; then
-    prefix=/usr/local
+    if test -w /usr/local; then
+        prefix=/usr/local
+    else
+        AC_PREFIX_PROGRAM($CC)
+    fi
 fi
+
 if test "${exec_prefix}" = "NONE"; then
     exec_prefix=$prefix
 fi
-dnl libdir must be a fully qualified path (not ${exec_prefix}/lib)
+dnl libdir and includedir must be fully qualified paths (not ${prefix}/lib)
 eval libdir="$libdir"
+eval includedir="$includedir"
 
 dnl Checks for programs.
 AC_PROG_CC
