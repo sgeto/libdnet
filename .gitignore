@@ -2,7 +2,6 @@
 *.o
 
 # Libraries
-
 *.a
 
 # Shared objects (inc. Windows DLLs)
@@ -51,6 +50,9 @@ python/build
 python/python-build
 python/dnet.c
 python/setup.py
+python/test\.py\.trs
+python/test\.py\.log
+python/test-suite\.log
 
 m4/libtool.m4
 m4/lt~obsolete.m4
@@ -67,3 +69,4 @@ test/dnet/dnet
 
 # Random stuff
 .prebuild*
+*.bak
