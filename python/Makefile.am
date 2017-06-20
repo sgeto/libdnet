@@ -7,7 +7,7 @@ LDADD = $(PYTHON_CFLAGS)
 noinst_SCRIPTS = python-build
 
 $(srcdir)/dnet.c: $(srcdir)/dnet.pyx
-	pyrexc $(srcdir)/dnet.pyx || pyrexc.py $(srcdir)/dnet.pyx
+	cython $(srcdir)/dnet.pyx || cython.py $(srcdir)/dnet.pyx
 
 python-build: $(srcdir)/dnet.c
 	$(PYTHON) setup.py build
