@@ -19,7 +19,7 @@ matrix:
     - os: osx
 script:
   - sudo add-apt-repository ppa:dns/gnu -y; sudo apt-get update -qq; sudo apt-get install -y autoconf automake m4 libtool check
-  - pip install cython cibuildwheel==0.2.1
+  - pip install --user cython cibuildwheel==0.2.1
   - "./autogen.sh && ./configure && make"
   - cibuildwheel --output-dir wheelhouse python
 #  - make check
