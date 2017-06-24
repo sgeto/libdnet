@@ -1,32 +1,54 @@
 dist: trusty
 language: c
-os:
-- linux
-- osx
-branches:
-  only:
-  - master
-  - CI
-compiler:
-- gcc
-- clang
-install: pip install --user setuptools wheel
-
+env:
+  global:
+  - CIBW_BEFORE_BUILD=pwd
+  - CIBW_TEST_COMMAND="{python} {project}/python/test.py"
 matrix:
+# Don't wait for "allow_failures" to finish
+  fast_finish: true
+  allow_failures:
+# I don't own a mac
+    - os: osx
   include:
     - sudo: required
       services:
         - docker
     - os: osx
-script:
-  - sudo add-apt-repository ppa:dns/gnu -y; sudo apt-get update -qq; sudo apt-get install -y autoconf automake m4 libtool check
+os:
+  - linux
+# "You do not necessarily need to use OS X if you develop on a Mac, only if you need Swift, Objective-C or other macOS software."
+  - osx
+branches:
+  only:
+# build *all* branches
+  - gh-pages
+  - /.*/
+compiler:
+  - gcc
+  - clang
+before_install:
+  - env
+install:
+  - if [ ${TRAVIS_OS_NAME} = "linux" ]; then sudo add-apt-repository ppa:dns/gnu -y; sudo apt-get update -qq; sudo apt-get install -y autoconf automake m4 libtool check; fi
+# libdumbnet-dev python-all-dev
+# osx dummy stuff:
+  - if [ ${TRAVIS_OS_NAME} = "osx" ]; then brew update; brew install libpcap libdnet; fi
   - pip install --user cython cibuildwheel==0.2.1
-  - "./autogen.sh && ./configure && make"
+  - pip install --user setuptools wheel
+script:
+  - "./autogen.sh && ./configure --disable-silent-rules --disable-python --with-pic && make"
   - sudo make install
   - cibuildwheel --output-dir wheelhouse "$PWD/python"
-#  - make check
+#  - make distcheck
+# after_script:
+#  - unit tests come here
+# after_success:
+  # - bash <(curl -s https://codecov.io/bash)
 before_deploy: echo 'ready?'
 deploy:
+# Don't delete build artifacts
+  skip_cleanup: true
 # GitHub Releases works only for tags, not for branches!
   provider: releases
   api_key:
@@ -36,7 +58,6 @@ deploy:
   file:
     - "libdnet-1.*.tar.gz"
     - "libdnet-1.*.zip"
-  skip_cleanup: true
   on:
     condition: $TRAVIS_OS_NAME = "linux"
     tags: true
@@ -51,8 +72,6 @@ deploy:
     branch: master
     # Your distributions here
     distributions: "sdist bdist_wheel"
-    # Don't delete build artifacts
-    skip_cleanup: true
   # provider: pages
   # skip_cleanup: true
   # github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
@@ -66,8 +85,10 @@ deploy:
 # - "./after_deploy_1.sh"
 # - "./after_deploy_2.sh"
 notifications:
+# Pull Request builds do not trigger email notifications.
   email:
     recipients:
     - autostart.ini@gmail
+# change: send a notification when the build status changes (default)
     on_success: change
     on_failure: always
