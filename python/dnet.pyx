@@ -31,6 +31,7 @@ cdef extern from "Python.h":
     unsigned long PyLong_AsUnsignedLong(object o)
 
 cdef extern from *:
+    int     errno
     char   *malloc(int size)
     void    free(void *p)
     void   *memcpy(char *dst, char *src, int len)
@@ -46,7 +47,6 @@ cdef __memcpy(char *dst, object src, int n):
     memcpy(dst, src, n)
 
 cdef __oserror():
-    cdef extern int errno
     return strerror(errno)
 
 def __iter_append(entry, l):
