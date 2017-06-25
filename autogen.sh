@@ -9,7 +9,7 @@
 # GNU libtool is named differently on some systems.  This code tries several
 # variants like glibtoolize (MacOSX) and libtoolize1x (FreeBSD)
 
-set +ex
+set +evx
 
 srcdir=`dirname $0`
 test -z "$srcdir" && srcdir=.

@@ -1,14 +1,11 @@
 ## $Id: Makefile.am 427 2003-03-28 06:02:44Z dugsong $
 
+if ENABLE_CHECK
 CPPFLAGS += -I$(top_srcdir)/include
 
-if ENABLE_CHECK
 AM_CFLAGS = $(CHECK_CFLAGS)
 TESTS = check_addr check_arp check_blob check_eth check_fw check_ip \
-	check_intf check_rand check_route
-else
-TESTS =
-endif
+        check_intf check_rand check_route
 
 noinst_PROGRAMS = $(TESTS)
 
@@ -23,3 +20,4 @@ check_rand_SOURCES = check_rand.c
 check_route_SOURCES = check_route.c
 
 LDADD = $(top_builddir)/src/libdnet.la $(CHECK_LIBS)
+endif

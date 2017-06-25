@@ -1,5 +1,3 @@
-## $Id: Makefile.am 601 2005-02-25 22:44:39Z dugsong $
-
 if ENABLE_PYTHON
 AM_CFLAGS = $(PYTHON_CFLAGS)
 LDADD = $(PYTHON_CFLAGS)
@@ -7,10 +5,11 @@ LDADD = $(PYTHON_CFLAGS)
 noinst_SCRIPTS = python-build
 
 $(srcdir)/dnet.c: $(srcdir)/dnet.pyx
-	cython $(srcdir)/dnet.pyx || cython.py $(srcdir)/dnet.pyx
+	$(AM_V_GEN)cython -av $(srcdir)/dnet.pyx || $(AM_V_GEN)cython.py -av $(srcdir)/dnet.pyx
 
 python-build: $(srcdir)/dnet.c
-	$(PYTHON) setup.py build
+#	$(PYTHON) setup.py build
+	$(AM_V_GEN)$(PYTHON) setup.py build_ext --inplace
 	touch python-build
 
 python-clean:
@@ -21,7 +20,7 @@ clean: python-clean
 distclean: clean
 
 python-install:
-	$(PYTHON) setup.py install --prefix=$(DESTDIR)$(prefix)
+	$(AM_V_GEN)$(PYTHON) setup.py install --prefix=$(DESTDIR)$(prefix)
 
 install-exec-local: python-install
 
