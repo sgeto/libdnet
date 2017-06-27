@@ -3,7 +3,7 @@ language: c
 env:
   global:
   - CIBW_BEFORE_BUILD=pwd
-  - CIBW_TEST_COMMAND="{python} {project}/python/test.py"
+  - CIBW_TEST_COMMAND="{project}/python/test.py"
 matrix:
 # Don't wait for "allow_failures" to finish
   fast_finish: true
@@ -35,14 +35,14 @@ install:
 # osx dummy stuff:
   - if [ ${TRAVIS_OS_NAME} = "osx" ]; then brew update; brew install libpcap libdnet; fi
   - pip install --user cython cibuildwheel==0.2.1
-  - pip install --user setuptools wheel
+  # - pip install --user setuptools wheel
 script:
-  - "./autogen.sh && ./configure --disable-silent-rules --disable-python --with-pic && make"
-  - sudo make install
+  - "./autogen.sh && ./configure --disable-silent-rules --with-pic && make"
+  # - sudo make install
   - cibuildwheel --output-dir wheelhouse "$PWD/python"
 #  - make distcheck
-# after_script:
-#  - unit tests come here
+after_script:
+ - make check
 # after_success:
   # - bash <(curl -s https://codecov.io/bash)
 before_deploy: echo 'ready?'
