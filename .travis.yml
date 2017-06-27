@@ -2,7 +2,8 @@ dist: trusty
 language: c
 env:
   global:
-  - CIBW_BEFORE_BUILD='export CFLAGS=-I{project}/include'
+  - CFLAGS='-I/home/travis/build/sgeto/libdnet/include'
+  - CIBW_BEFORE_BUILD='export CFLAGS=-I/home/travis/build/sgeto/libdnet/include && echo $TRAVIS_BUILD_DIR'
   - CIBW_TEST_COMMAND="{project}/python/test.py"
 matrix:
 # Don't wait for "allow_failures" to finish
@@ -29,6 +30,7 @@ compiler:
   - clang
 before_install:
   - env
+  - echo $TRAVIS_BUILD_DIR
 install:
   - if [ ${TRAVIS_OS_NAME} = "linux" ]; then sudo add-apt-repository ppa:dns/gnu -y; sudo apt-get update -qq; sudo apt-get install -y autoconf automake m4 libtool check; fi
 # libdumbnet-dev python-all-dev
@@ -39,7 +41,7 @@ install:
 script:
   - "./autogen.sh && ./configure --disable-silent-rules --with-pic && make"
   # - sudo make install
-  - cibuildwheel --output-dir wheelhouse "$PWD/python"
+  - cibuildwheel --output-dir wheelhouse $TRAVIS_BUILD_DIR/python"
 #  - make distcheck
 after_script:
  - make check
