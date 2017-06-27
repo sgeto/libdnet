@@ -5,7 +5,7 @@ LDADD = $(PYTHON_CFLAGS)
 noinst_SCRIPTS = python-build
 
 $(srcdir)/dnet.c: $(srcdir)/dnet.pyx
-	$(AM_V_GEN)cython -av $(srcdir)/dnet.pyx || $(AM_V_GEN)cython.py -av $(srcdir)/dnet.pyx
+	$(AM_V_GEN)cython $(srcdir)/dnet.pyx || $(AM_V_GEN)cython.py $(srcdir)/dnet.pyx
 
 python-build: $(srcdir)/dnet.c
 #	$(PYTHON) setup.py build
