@@ -2,7 +2,7 @@ dist: trusty
 language: c
 env:
   global:
-  - CIBW_BEFORE_BUILD=pwd
+  - CIBW_BEFORE_BUILD=export CFLAGS='-I/home/travis/build/sgeto/libdnet/include'
   - CIBW_TEST_COMMAND="{project}/python/test.py"
 matrix:
 # Don't wait for "allow_failures" to finish
