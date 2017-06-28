@@ -41,7 +41,7 @@ install:
 script:
   - "./autogen.sh && ./configure --disable-silent-rules --with-pic && make"
   # - sudo make install
-  - cibuildwheel --output-dir wheelhouse $TRAVIS_BUILD_DIR/python"
+  - cibuildwheel --output-dir wheelhouse $TRAVIS_BUILD_DIR/python
 #  - make distcheck
 after_script:
  - make check
