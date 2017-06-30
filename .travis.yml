@@ -4,7 +4,7 @@ env:
   global:
   - CFLAGS='-I/home/travis/build/sgeto/libdnet/include'
   - CIBW_BEFORE_BUILD=cd python
-  - CIBW_TEST_COMMAND="{project}/python/test.py"
+#  - CIBW_TEST_COMMAND="{project}/python/test.py"
 matrix:
 # Don't wait for "allow_failures" to finish
   fast_finish: true
