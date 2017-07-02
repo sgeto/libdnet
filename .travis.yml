@@ -32,19 +32,18 @@ before_install:
   - env
   - echo $TRAVIS_BUILD_DIR
 install:
-  - if [ ${TRAVIS_OS_NAME} = "linux" ]; then sudo add-apt-repository ppa:dns/gnu -y; sudo apt-get update -qq; sudo apt-get install -y autoconf automake m4 libtool check colormake; fi
-  - if [ ${TRAVIS_OS_NAME} = "osx" ]; then brew update; brew install colormake check; fi
+  - if [ ${TRAVIS_OS_NAME} = "linux" ]; then sudo add-apt-repository ppa:dns/gnu -y; sudo apt-get update -qq; sudo apt-get install -y autoconf automake m4 libtool check; fi
+  - if [ ${TRAVIS_OS_NAME} = "osx" ]; then brew update; brew install check; fi
   - pip install --upgrade pip
   - pip install cython cibuildwheel
   # - pip install --user setuptools wheel
 script:
-  - alias make=colormake
   - "./autogen.sh && ./configure --disable-silent-rules --with-pic && make"
   # - sudo make install
   - cibuildwheel --output-dir wheelhouse
-#  - make distcheck
-after_script:
- - make check
+# after_script:
+ # - make check
+ # - make distcheck
 # after_success:
   # - bash <(curl -s https://codecov.io/bash)
 before_deploy: echo 'ready?'
