@@ -36,7 +36,8 @@ install:
 # libdumbnet-dev python-all-dev
 # osx dummy stuff:
   - if [ ${TRAVIS_OS_NAME} = "osx" ]; then brew update; brew install libpcap libdnet; fi
-  - pip install --user cython cibuildwheel
+  - pip install --upgrade pip
+  - pip install cython cibuildwheel
   # - pip install --user setuptools wheel
 script:
   - "./autogen.sh && ./configure --disable-silent-rules --with-pic && make"
