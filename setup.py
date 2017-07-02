@@ -18,6 +18,8 @@ dnet_extobj = []
 if sys.platform == 'win32':
     dnet_srcs.extend(['src/addr-util.c', 'src/addr.c', 'src/blob.c', 'src/ip-util.c', 'src/ip6.c', 'src/rand.c', 'src/err.c', 'src/strlcat.c', 'src/strlcpy.c', 'src/strsep.c', 'src/arp-win32.c', 'src/eth-win32.c', 'src/fw-pktfilter.c', 'src/intf-win32.c', 'src/ip-win32.c', 'src/route-win32.c', 'src/tun-none.c'])
     dnet_libs.extend([ 'iphlpapi', 'ws2_32', 'packet', 'wpcap' ])
+elif sys.platform == 'linux':
+    dnet_srcs.extend(['src/addr-util.c', 'src/addr.c', 'src/blob.c', 'src/ip-util.c', 'src/ip6.c', 'src/rand.c', 'src/strlcat.c', 'src/strlcpy.c', 'src/arp-ioctl.c', 'src/eth-linux.c', 'src/fw-none.c', 'src/intf.c', 'src/ip.c', 'src/route-linux.c', 'src/tun-linux.c'])
 else:
     # XXX - can't build on Cygwin+MinGW yet.
     #if sys.platform == 'cygwin':
