@@ -21,10 +21,11 @@ if sys.platform == 'win32':
 elif sys.platform == 'linux':
     dnet_srcs.extend(['src/addr-util.c', 'src/addr.c', 'src/blob.c', 'src/ip-util.c', 'src/ip6.c', 'src/rand.c', 'src/strlcat.c', 'src/strlcpy.c', 'src/arp-ioctl.c', 'src/eth-linux.c', 'src/fw-none.c', 'src/intf.c', 'src/ip.c', 'src/route-linux.c', 'src/tun-linux.c'])
 else:
+    dnet_srcs.extend(['src/addr-util.c', 'src/addr.c', 'src/blob.c', 'src/ip-util.c', 'src/ip6.c', 'src/rand.c', 'src/strlcat.c', 'src/strlcpy.c', 'src/arp-ioctl.c', 'src/eth-linux.c', 'src/fw-none.c', 'src/intf.c', 'src/ip.c', 'src/route-linux.c', 'src/tun-linux.c'])
     # XXX - can't build on Cygwin+MinGW yet.
     #if sys.platform == 'cygwin':
     #    dnet_extargs.append('-mno-cygwin')
-    dnet_extobj.extend(glob.glob('src/.libs/*.o'))
+    # dnet_extobj.extend(glob.glob('src/.libs/*.o'))
 
 dnet = Extension('dnet',
                  dnet_srcs,
